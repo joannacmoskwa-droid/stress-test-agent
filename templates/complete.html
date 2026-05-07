@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress-Test Complete</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stage-header {
+            background: #27ae60;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .stage-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .stage-number-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .content-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        
+        .position-display {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+            margin-bottom: 25px;
+        }
+        
+        .stage-item {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .stage-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .stage-name {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .stage-number {
+            background: #27ae60;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .stage-title-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .stage-description {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .user-notes {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid #ecf0f1;
+        }
+        
+        .user-notes.empty {
+            color: #95a5a6;
+            font-style: italic;
+        }
+        
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 0 10px;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .btn-primary {
+            background: #27ae60;
+        }
+        
+        .btn-primary:hover {
+            background: #219a52;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        .insights {
+            background: #e8f8f5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #2ecc71;
+            margin-top: 30px;
+        }
+        
+        .insights h3 {
+            color: #1e8449;
+            margin-bottom: 15px;
+        }
+        
+        .insights p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Argument Stress-Test Complete</h1>
+        <p>Congratulations! You've completed all six stages.</p>
+    </header>
+
+    <div class="content-card">
+        <div class="position-display">
+            <h3>Your Original Position:</h3>
+            <p><em>{{ position }}</em></p>
+        </div>
+
+        <h2>Your Journey Through the Six Stages</h2>
+        
+        {% for stage in stages %}
+        <div class="stage-item">
+            <div class="stage-name">
+                <div class="stage-number">{{ loop.index }}</div>
+                <div class="stage-title-text">{{ stage.name }}</div>
+            </div>
+            <div class="stage-description">{{ stage.description }}</div>
+            <div class="user-notes {% if not stage.notes %}empty{% endif %}">
+                {% if stage.notes %}
+                    <p>{{ stage.notes }}</p>
+                {% else %}
+                    <p>No notes recorded for this stage.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="insights">
+        <h3>Next Steps:</h3>
+        <p>Review your notes above. Consider how your position has evolved through this process.</p>
+        <p>You might want to:</p>
+        <ul>
+            <li>Identify patterns in your thinking across the stages</li>
+            <li>Note any significant changes in your position</li>
+            <li>Consider what evidence or arguments were most persuasive</li>
+            <li>Think about how you might address remaining objections</li>
+        </ul>
+    </div>
+
+    <div class="btn-container">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Start a New Stress-Test</a>
+        <a href="{{ url_for('reset') }}" class="btn btn-primary">Reset and Start Over</a>
+    </div>
+
+    <footer>
+        <p>Built with ❤️ using Flask • Argument Stress-Test Tool</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argument Stress-Test Tool</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        .description {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .stages-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stage-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .stage-number {
+            background: #3498db;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+        
+        .stage-content {
+            margin-left: 15px;
+            flex: 1;
+        }
+        
+        .stage-name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+        
+        .stage-desc {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        
+        .flash {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        
+        .flash.error {
+            background: #fadbd8;
+            color: #922b21;
+            border: 1px solid #ebc3b0;
+        }
+        
+        .flash.success {
+            background: #d5f5e3;
+            color: #1e8449;
+            border: 1px solid #abebc6;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Argument Stress-Test Tool</h1>
+        <p class="subtitle">A six-stage methodology to strengthen your thinking</p>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="description">
+        <p>This tool guides you through a structured process to examine and strengthen your arguments. By working through six distinct stages, you'll challenge your assumptions, consider opposing views, and arrive at a more robust position.</p>
+        <p><strong>How it works:</strong></p>
+        <ol>
+            <li>Enter your position or argument below</li>
+            <li>Work through each of the six stages sequentially</li>
+            <li>Type your thoughts/reflections for each stage</li>
+            <li>Click "Continue" to move to the next stage</li>
+            <li>Review your complete journey at the end</li>
+        </ol>
+    </div>
+
+    <div class="stages-preview">
+        <h2>The Six Stages</h2>
+        {% for stage in stages %}
+        <div class="stage-item">
+            <div class="stage-number">{{ loop.index }}</div>
+            <div class="stage-content">
+                <div class="stage-name">{{ stage.name }}</div>
+                <div class="stage-desc">{{ stage.description }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <form method="POST" action="{{ url_for('start') }}">
+        <div class="form-group">
+            <label for="position">Enter your position or argument to stress-test:</label>
+            <textarea id="position" name="position" placeholder="For example: Renewable energy is the best solution for climate change" required></textarea>
+        </div>
+        <button type="submit" class="btn">Begin Stress-Test</button>
+    </form>
+
+    <footer>
+        <p>Built with ❤️ using Flask • <a href="#" onclick="window.location.reload()">Start Over</a></p>
+    </footer>
+</body>
+</html>
